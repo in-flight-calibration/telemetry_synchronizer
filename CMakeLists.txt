@@ -14,7 +14,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(ifc_msgs REQUIRED)
+find_package(ifc_tools REQUIRED)
+find_package(px4_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -24,7 +27,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    Eigen3::Eigen
     ifc_msgs::ifc_msgs__rosidl_typesupport_cpp
+    ifc_tools::ifc_tools
+    px4_msgs::px4_msgs__rosidl_typesupport_cpp
     rclcpp::rclcpp
 )
 
@@ -32,6 +38,6 @@ install(TARGETS ${PROJECT_NAME}
     DESTINATION lib/${PROJECT_NAME}
 )
 
-ament_export_dependencies(ifc_msgs rclcpp)
+ament_export_dependencies(Eigen3 ifc_msgs ifc_tools px4_msgs rclcpp)
 
 ament_package()
