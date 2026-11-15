@@ -127,6 +127,9 @@ private:
         telemetry.angular_velocity.fill(nan);
         telemetry.position.fill(nan);
         telemetry.velocity.fill(nan);
+        telemetry.ref_lat = std::numeric_limits<double>::quiet_NaN();
+        telemetry.ref_lon = std::numeric_limits<double>::quiet_NaN();
+        telemetry.ref_alt = nan;
         telemetry.latitude = std::numeric_limits<double>::quiet_NaN();
         telemetry.longitude = std::numeric_limits<double>::quiet_NaN();
         telemetry.altitude = nan;
@@ -148,6 +151,9 @@ private:
         {
             std::copy(local_position->position.begin(), local_position->position.end(), telemetry.position.begin());
             std::copy(local_position->velocity.begin(), local_position->velocity.end(), telemetry.velocity.begin());
+            telemetry.ref_lat = local_position->ref_lat;
+            telemetry.ref_lon = local_position->ref_lon;
+            telemetry.ref_alt = local_position->ref_alt;
         }
 
         if (const auto global_position = _global_position->interpolateAndPrune(timestamp, *_global_position_utils, _global_position_keep))
