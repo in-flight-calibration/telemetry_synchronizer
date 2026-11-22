@@ -112,13 +112,13 @@ private:
 
     void receive(const ifc_msgs::msg::StreamInfo& stream_info)
     {
-        if (!_calibration_results || _calibration_results->delay_status != ifc_msgs::msg::CalibrationResults::DELAY_STATUS_VALID)
+        if (!_calibration_results || _calibration_results->delay.status.value != ifc_msgs::msg::Status::VALID)
         {
             return;
         }
 
         constexpr float nan = std::numeric_limits<float>::quiet_NaN();
-        const int64_t timestamp = rclcpp::Time(stream_info.image_timestamp).nanoseconds() + _calibration_results->delay;
+        const int64_t timestamp = rclcpp::Time(stream_info.image_timestamp).nanoseconds() + _calibration_results->delay.delay;
 
 
         ifc_msgs::msg::AutopilotTelemetry telemetry;
