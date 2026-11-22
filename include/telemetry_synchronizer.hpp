@@ -11,6 +11,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <limits>
@@ -118,7 +119,7 @@ private:
         }
 
         constexpr float nan = std::numeric_limits<float>::quiet_NaN();
-        const int64_t timestamp = rclcpp::Time(stream_info.image_timestamp).nanoseconds() + _calibration_results->delay.delay;
+        const int64_t timestamp = rclcpp::Time(stream_info.image_timestamp).nanoseconds() + std::llround(_calibration_results->delay.delay);
 
 
         ifc_msgs::msg::AutopilotTelemetry telemetry;
